@@ -1,0 +1,42 @@
+<!-- signup.html (Signup Page) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h2>Signup</h2>
+    <form id="signupForm">
+        <label for="newUsername">Username:</label><br>
+        <input type="text" id="newUsername" name="newUsername" required><br>
+        <label for="newPassword">Password:</label><br>
+        <input type="password" id="newPassword" name="newPassword" required><br><br>
+        <button type="submit">Sign Up</button>
+    </form>
+
+    <p id="successMessage" style="display:none; color:green;">Account created successfully!</p>
+    <button id="okButton" style="display:none;">OK</button>
+
+    <script>
+        document.getElementById("signupForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            var newUsername = document.getElementById("newUsername").value;
+            var newPassword = document.getElementById("newPassword").value;
+            
+            // Here you would typically do something with the new username and password, like sending it to a server to create an account
+            
+            // For demo purpose, just showing success message and OK button
+            document.getElementById("signupForm").style.display = "none";
+            document.getElementById("successMessage").style.display = "block";
+            document.getElementById("okButton").style.display = "block";
+        });
+
+        document.getElementById("okButton").addEventListener("click", function() {
+            window.location.href = "home.html"; // Replace "home.html" with your home page URL
+        });
+    </script>
+</body>
+</html>

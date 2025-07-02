@@ -1,0 +1,66 @@
+/* style.css */
+body {
+    font-family: Arial, sans-serif;
+    background-image: url("img/bckgrnd.jpg");
+}
+#signupForm{
+    font-size: 20px;}
+
+h2 {
+    text-align: center;
+    font-size: 30px;
+    color: green;
+    text-shadow: #4CAF50;
+    font-weight: bold;
+    opacity: 10px;
+}
+h3{
+    text-align: center;
+    color:black;
+    font-size: 40px;
+}
+
+form {
+    max-width: 300px;
+    margin: 0 auto;
+    color: white;
+    font-size: 27px;
+    font-weight: bold;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#successMessage {
+    text-align: center;
+}
+
+#okButton {
+    margin-top: 10px;
+}

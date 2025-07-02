@@ -1,0 +1,45 @@
+<!-- signup.html (Signup Page) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INIESAT MEDICAL CENTER</title>
+    <link rel="stylesheet" href="signup.css">
+</head>
+<body>
+    <h2 style="font-weight: 600;">WELCOME TO INIESAT MEDICAL CENTER!</h2>
+    <h3>Signup</h3>
+    <form id="signupForm">
+        <label for="newUsername">Username:</label>
+        <input type="text" id="newUsername" name="newUsername" required>
+        <label for="newPassword">Password:</label>
+        <input type="password" id="newPassword" name="newPassword" required>
+        <label for="newPassword">confirm password:</label>
+        <input type="password" id="confirmpassword" name="confirmpassword" required>
+        <button type="submit">Sign Up</button>
+    </form>
+
+    <p id="successMessage" style="display:none; color:white;font-size: 20px;">Account created successfully!</p>
+    <button id="okButton" style="display:none;">OK</button>
+
+    <script>
+        document.getElementById("signupForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            var newUsername = document.getElementById("newUsername").value;
+            var newPassword = document.getElementById("newPassword").value;
+            
+            // Here you would typically do something with the new username and password, like sending it to a server to create an account
+            
+            // For demo purpose, just showing success message and OK button
+            document.getElementById("signupForm").style.display = "none";
+            document.getElementById("successMessage").style.display = "block";
+            document.getElementById("okButton").style.display = "block";
+        });
+
+        document.getElementById("okButton").addEventListener("click", function() {
+            window.location.href = "index.html"; // Replace "home.html" with your home page URL
+        });
+    </script>
+</body>
+</html>
