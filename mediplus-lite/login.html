@@ -5,32 +5,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="login.css">
-    <title>INIESAT MEDICAL CENTER</title>
+    <title>Login</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h2 style= "color: green;">WELCOME BACK!</h2>
-    <form id="loginForm">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
-        <button type="submit">Login</button>
-    </form>
-    <p id="accountNotFound" style="display:none; color:red;">Account not found. Please <a href="signup.html">sign up</a>.</p>
-
+    <div class="container">
+        <h2>Login</h2>
+        <form id="login-form">
+            <input type="email" name="email" placeholder="Email" required><br>
+            <input type="password" name="password" placeholder="Password" required><br>
+            <button type="submit">Login</button>
+        </form>
+        <div id="login-message"></div>
+        <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script>
-        document.getElementById("loginForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-            var username = document.getElementById("username").value;
-            var password = document.getElementById("password").value;
-            
-            // For demo purpose, just checking if username is "admin" and password is "password"
-            if(username === "admin" && password === "password") {
-                alert("Login Successful!");
-            } else {
-                document.getElementById("accountNotFound").style.display = "block";
-            }
+        document.addEventListener('DOMContentLoaded', function() {
+            const SUPABASE_URL = "https://qcofqcjvlceumbujbqvh.supabase.co";
+            const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFjb2ZxY2p2bGNldW1idWpicXZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE0Njc0MzMsImV4cCI6MjA2NzA0MzQzM30.CaoegSN4WgEU06S5LnG9zoV4Mi_roOgTPahQXTvC_j0";
+            const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+            document.getElementById('login-form').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const email = e.target.email.value;
+                const password = e.target.password.value;
+                const { user, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+                const messageDiv = document.getElementById('login-message');
+                if (error) {
+                    messageDiv.textContent = error.message;
+                    messageDiv.style.color = 'red';
+                } else {
+                    messageDiv.textContent = 'Login successful! Redirecting...';
+                    messageDiv.style.color = 'green';
+                    setTimeout(() => {
+                        window.location.href = 'appointment.html';
+                    }, 1000);
+                }
+            });
         });
     </script>
 </body>

@@ -4,42 +4,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INIESAT MEDICAL CENTER</title>
+    <title>Sign Up</title>
     <link rel="stylesheet" href="signup.css">
 </head>
 <body>
-    <h2 style="font-weight: 600;">WELCOME TO INIESAT MEDICAL CENTER!</h2>
-    <h3>Signup</h3>
-    <form id="signupForm">
-        <label for="newUsername">Username:</label>
-        <input type="text" id="newUsername" name="newUsername" required>
-        <label for="newPassword">Password:</label>
-        <input type="password" id="newPassword" name="newPassword" required>
-        <label for="newPassword">confirm password:</label>
-        <input type="password" id="confirmpassword" name="confirmpassword" required>
-        <button type="submit">Sign Up</button>
-    </form>
-
-    <p id="successMessage" style="display:none; color:white;font-size: 20px;">Account created successfully!</p>
-    <button id="okButton" style="display:none;">OK</button>
-
+    <div class="container">
+        <h2>Sign Up</h2>
+        <form id="signup-form">
+            <input type="email" name="email" placeholder="Email" required><br>
+            <input type="password" name="password" placeholder="Password" required><br>
+            <button type="submit">Sign Up</button>
+        </form>
+        <div id="signup-message"></div>
+        <p>Already have an account? <a href="login.html">Login</a></p>
+    </div>
+    <!-- Supabase client library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <!-- Your custom script -->
     <script>
-        document.getElementById("signupForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-            var newUsername = document.getElementById("newUsername").value;
-            var newPassword = document.getElementById("newPassword").value;
-            
-            // Here you would typically do something with the new username and password, like sending it to a server to create an account
-            
-            // For demo purpose, just showing success message and OK button
-            document.getElementById("signupForm").style.display = "none";
-            document.getElementById("successMessage").style.display = "block";
-            document.getElementById("okButton").style.display = "block";
-        });
+      document.addEventListener('DOMContentLoaded', function() {
+        const SUPABASE_URL = "https://qcofqcjvlceumbujbqvh.supabase.co";
+        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFjb2ZxY2p2bGNldW1idWpicXZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE0Njc0MzMsImV4cCI6MjA2NzA0MzQzM30.CaoegSN4WgEU06S5LnG9zoV4Mi_roOgTPahQXTvC_j0";
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        document.getElementById("okButton").addEventListener("click", function() {
-            window.location.href = "index.html"; // Replace "home.html" with your home page URL
+        document.getElementById('signup-form').addEventListener('submit', async function(e) {
+          e.preventDefault();
+          const email = e.target.email.value;
+          const password = e.target.password.value;
+          const { user, error } = await supabaseClient.auth.signUp({ email, password });
+          const messageDiv = document.getElementById('signup-message');
+          if (error) {
+            messageDiv.textContent = error.message;
+            messageDiv.style.color = 'red';
+          } else {
+            messageDiv.textContent = 'Signup successful! Please check your email to confirm your account.';
+            messageDiv.style.color = 'green';
+            e.target.reset();
+          }
         });
+      });
     </script>
 </body>
 </html>

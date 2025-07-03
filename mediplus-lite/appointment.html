@@ -8,16 +8,42 @@
 </head>
 <body>
     <div class="container">
-        <form class="form" action="process_form.php" method="post">
-            <!-- Your form fields -->
+        <form class="form" id="appointment-form">
             <div class="col-lg-6 col-md-6 col-12">
                 <div class="form-group">
-                    <input name="name" type="text" placeholder="Name">
+                    <input name="name" type="text" placeholder="Name" required>
                 </div>
             </div>
-            <!-- Other form fields -->
-
-            <!-- Submit Button -->
+            <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-group">
+                    <input name="email" type="email" placeholder="Email" required>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-group">
+                    <input name="phone" type="text" placeholder="Phone" required>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-group">
+                    <input name="date" type="date" placeholder="Date" required>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-group">
+                    <input name="doctor" type="text" placeholder="Doctor" required>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-group">
+                    <input name="department" type="text" placeholder="Department" required>
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-12">
+                <div class="form-group">
+                    <textarea name="message" placeholder="Message" required></textarea>
+                </div>
+            </div>
             <div class="col-lg-5 col-md-4 col-12">
                 <div class="form-group">
                     <div class="button">
@@ -27,5 +53,38 @@
             </div>
         </form>
     </div>
+    <div id="booking-message"></div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script>
+      const SUPABASE_URL = "https://qcofqcjvlceumbujbqvh.supabase.co";
+      const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFjb2ZxY2p2bGNldW1idWpicXZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE0Njc0MzMsImV4cCI6MjA2NzA0MzQzM30.CaoegSN4WgEU06S5LnG9zoV4Mi_roOgTPahQXTvC_j0";
+      const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+      document.getElementById('appointment-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const form = e.target;
+        const formData = {
+          name: form.name.value,
+          email: form.email.value,
+          phone: form.phone.value,
+          date: form.date.value,
+          message: form.message.value,
+          doctor: form.doctor.value,
+          department: form.department.value
+        };
+        const { data, error } = await supabaseClient
+          .from('appointments')
+          .insert([formData]);
+        const messageDiv = document.getElementById('booking-message');
+        if (error) {
+          messageDiv.textContent = 'Error booking appointment: ' + error.message;
+          messageDiv.style.color = 'red';
+        } else {
+          messageDiv.textContent = 'Appointment booked successfully!';
+          messageDiv.style.color = 'green';
+          form.reset();
+        }
+      });
+    </script>
 </body>
 </html>
